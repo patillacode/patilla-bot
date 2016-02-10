@@ -4,7 +4,7 @@ commands["/start"] = "Returns a welcome message.";
 commands["/kitten"] = "Returns a random kitten picture.";
 
 function getHelpMessage(){
-    var message = "This is the list of available commands:\n\n";
+    var message = "This are the available commands:\n\n";
     for(var key in commands){
         message += key+": "+commands[key]+"\n";
     }
