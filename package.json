@@ -1,0 +1,27 @@
+{
+  "name": "patilla-bot",
+  "version": "0.0.1",
+  "description": "Telegram bot.",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patillacode/patilla-bot.git"
+  },
+  "dependencies": {
+    "node-telegram-bot-api": "^0.20.1"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "patilla"
+  ],
+  "author": "Patilla Code",
+  "license": "GNU v3",
+  "bugs": {
+    "url": "https://github.com/patillacode/patilla-bot/issues"
+  },
+  "homepage": "https://github.com/patillacode/patilla-bot"
+}
