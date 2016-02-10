@@ -25,8 +25,15 @@ bot.onText(/\/help/, function (msg, match) {
 // Matches /start
 bot.onText(/\/start/, function (msg, match) {
     var fromId = msg.from.id; // get the id, of who is sending the message
-    var message = "Welcome! I am PatillaBot\n";
-    bot.sendMessage(fromId, message);
+    var message = "Welcome! I am PatillaBot.\n\n";
+    message += "I can do many things for you, please take a look at all the options. Enjoy!\n\n";
+    message += commands.getHelpMessage();
+    bot.sendMessage(fromId,
+                    message,
+                    {
+                        parse_mode: "Markdown",
+                        disable_web_page_preview: true
+                    });
 });
 
 // Matches /start
