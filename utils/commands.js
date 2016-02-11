@@ -15,6 +15,15 @@ function getHelpMessage(){
     return message;
 }
 
+function getStartMessage(){
+    var message = "Welcome! I am PatillaBot.\n\n";
+    message += "I can do many things for you, please take a look at all the options.\n\n";
+    message += getHelpMessage();
+    message += "Enjoy!";
+    return message;
+}
+
+exports.getStartMessage = getStartMessage;
 exports.getHelpMessage = getHelpMessage;
 
 // weather

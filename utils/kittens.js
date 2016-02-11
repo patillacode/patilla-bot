@@ -1,5 +1,5 @@
 fs = require('fs');
-config = require('./config');
+config = require('../config');
 
 function getKittenImagePath(){
     var file_list = fs.readdirSync(config.images_path);

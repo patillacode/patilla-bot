@@ -2,6 +2,7 @@ var TelegramBot = require('node-telegram-bot-api');
 var config = require('./config');
 var commands = require(config.commands_path);
 var kittens = require(config.kittens_path);
+var weather = require(config.weather_path);
 
 // Setup polling way
 var bot = new TelegramBot(config.token, {polling: true});
@@ -25,9 +26,7 @@ bot.onText(/\/help/, function (msg, match) {
 // Matches /start
 bot.onText(/\/start/, function (msg, match) {
     var fromId = msg.from.id; // get the id, of who is sending the message
-    var message = "Welcome! I am PatillaBot.\n\n";
-    message += "I can do many things for you, please take a look at all the options. Enjoy!\n\n";
-    message += commands.getHelpMessage();
+    var message = commands.getStartMessage();
     bot.sendMessage(fromId,
                     message,
                     {
@@ -36,12 +35,26 @@ bot.onText(/\/start/, function (msg, match) {
                     });
 });
 
-// Matches /start
+// Matches /kitten
 bot.onText(/\/kitten/, function (msg) {
     var chatId = msg.chat.id;
     // photo can be: a file path, a stream or a Telegram file_id
     var photo = kittens.getKittenImagePath();
     bot.sendPhoto(chatId, photo, {caption: 'A cute kitten.'});
+});
+
+// Matches /weather
+bot.onText(/\/weather/, function (msg, match) {
+    var fromId = msg.from.id; // get the id, of who is sending the message
+    console.log("match: ", match);
+    weather.getWeatherMessage(match[1], function(message){
+        bot.sendMessage(fromId,
+                        message,
+                        {
+                            parse_mode: "Markdown",
+                            disable_web_page_preview: true
+                        });
+    });
 });
 
 // // Matches /echo [whatever]
