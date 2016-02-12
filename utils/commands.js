@@ -1,7 +1,10 @@
+var emoji = require('node-emoji').emoji;
+
 var commands = {};
-commands["/help"] = "Returns the list of available commands.";
-commands["/start"] = "Returns a welcome message.";
-commands["/kitten"] = "Returns a random kitten picture.";
+commands["/help"] = "Returns the list of available commands. " + emoji.loudspeaker;
+commands["/start"] = "Returns a welcome message. " + emoji.wave;
+commands["/kitten"] = "Returns a random kitten picture. " + emoji.heart_eyes_cat;
+commands["/weather `city`"] = "Returns the weather for a given city.";
 
 function getHelpMessage(){
     var message = "This are the available commands:\n\n";
