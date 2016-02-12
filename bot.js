@@ -3,9 +3,10 @@ var config = require('./config');
 var commands = require(config.commands_path);
 var kittens = require(config.kittens_path);
 var weather = require(config.weather_path);
+var quotes = require(config.quotes_path);
 
 // Setup polling way
-var bot = new TelegramBot(config.token, {polling: true});
+var bot = new TelegramBot(config.telegram_token, {polling: true});
 
 bot.getMe().then(function (me) {
     console.log('%s has started', me.username);
@@ -56,11 +57,49 @@ bot.onText(/\/weather (.+)/, function (msg, match) {
     });
 });
 
-// Matches /weather
-bot.onText(/\/weather/, function (msg, match) {
+// Matches /weather ($ simbolizes end of line)
+bot.onText(/\/weather$/, function (msg, match) {
     var fromId = msg.from.id; // get the id, of who is sending the message
-    var message = "Please write the city you want to get the weather info for:\n"
-    message += "Like this `/weather city`."
+    var message = "Please write the city you want to get the weather info for:\n";
+    message += "Like this `/weather city`";
+    bot.sendMessage(fromId,
+                    message,
+                    {
+                        parse_mode: "Markdown",
+                        disable_web_page_preview: true
+                    });
+});
+
+// Matches /quote category
+bot.onText(/\/quote (.+)/, function (msg, match) {
+    var fromId = msg.from.id; // get the id, of who is sending the message
+    var category = match[1];
+    if(quotes.checkCategory(category) == true){
+        quotes.getRandomQuote(category, function(message){
+            bot.sendMessage(fromId,
+                            message,
+                            {
+                                parse_mode: "Markdown",
+                                disable_web_page_preview: true
+                            });
+        });
+    }
+    else{
+        var message = "Category `" + category + "` is not supported, " + quotes.getQuotesErrorMessage();
+        bot.sendMessage(fromId,
+                        message,
+                        {
+                            parse_mode: "Markdown",
+                            disable_web_page_preview: true
+                        });
+    }
+
+});
+
+// Matches /quote ($ simbolizes end of line)
+bot.onText(/\/quote$/, function (msg, match) {
+    var fromId = msg.from.id; // get the id, of who is sending the message
+    var message = "Please write the category, " + quotes.getQuotesErrorMessage();
     bot.sendMessage(fromId,
                     message,
                     {

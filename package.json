@@ -13,6 +13,7 @@
   "dependencies": {
     "node-emoji": "^1.0.4",
     "node-telegram-bot-api": "^0.20.1",
+    "unirest": "^0.4.2",
     "weather-js": "^1.0.2"
   },
   "keywords": [
