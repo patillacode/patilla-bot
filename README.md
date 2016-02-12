@@ -1,5 +1,5 @@
 # patilla-bot
-Telegram bot.
+Telegram bot - using [yagop's library](https://github.com/yagop/node-telegram-bot-api)
 
 You can see it in action: [@patilla_bot](https://telegram.me/patilla_bot)
 
