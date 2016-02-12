@@ -8,23 +8,6 @@ function checkCategory(category){
     return false
 }
 
-function getRandomQuote(category, callback){
-    unirest.post("https://andruxnet-random-famous-quotes.p.mashape.com/?cat=famous")
-    .header("X-Mashape-Key", config.mashape_key)
-    .header("Content-Type", "application/x-www-form-urlencoded")
-    .header("Accept", "application/json")
-    .end(function (result) {
-      // console.log(result.status);
-      // console.log(result.headers);
-      // console.log(result.body);
-      console.log("Got quote...");
-      var quote_data = JSON.parse(result.body);
-      var message = "\"" + quote_data['quote'] + "\" - ";
-      message += "*" + quote_data['author'] + "*";
-      callback(message);
-    });
-}
-
 function getQuotesErrorMessage(){
     var message = "available categories are:\n";
     for (var i = 0; i < category_list.length; i++) {
@@ -34,7 +17,31 @@ function getQuotesErrorMessage(){
     return message;
 }
 
-// exports.category_list = category_list;
-exports.checkCategory = checkCategory;
+function getRandomQuote(category, callback){
+
+    if(checkCategory(category) == true){
+        unirest.post("https://andruxnet-random-famous-quotes.p.mashape.com/?cat="+category)
+        .header("X-Mashape-Key", config.mashape_key)
+        .header("Content-Type", "application/x-www-form-urlencoded")
+        .header("Accept", "application/json")
+        .end(function (result) {
+          // console.log(result.status);
+          // console.log(result.headers);
+          // console.log(result.body);
+          console.log("Got quote...");
+          var quote_data = JSON.parse(result.body);
+          var message = "\"" + quote_data['quote'] + "\" - ";
+          message += "*" + quote_data['author'] + "*";
+          callback(message);
+        });
+    }
+    else{
+        var message = "Category `" + category + "` is not supported, " + quotes.getQuotesErrorMessage();
+        callback(message);
+    }
+
+}
+
+
 exports.getRandomQuote = getRandomQuote;
 exports.getQuotesErrorMessage = getQuotesErrorMessage;

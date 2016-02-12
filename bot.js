@@ -74,26 +74,14 @@ bot.onText(/\/weather$/, function (msg, match) {
 bot.onText(/\/quote (.+)/, function (msg, match) {
     var fromId = msg.from.id; // get the id, of who is sending the message
     var category = match[1];
-    if(quotes.checkCategory(category) == true){
-        quotes.getRandomQuote(category, function(message){
-            bot.sendMessage(fromId,
-                            message,
-                            {
-                                parse_mode: "Markdown",
-                                disable_web_page_preview: true
-                            });
-        });
-    }
-    else{
-        var message = "Category `" + category + "` is not supported, " + quotes.getQuotesErrorMessage();
+    quotes.getRandomQuote(category, function(message){
         bot.sendMessage(fromId,
                         message,
                         {
                             parse_mode: "Markdown",
                             disable_web_page_preview: true
                         });
-    }
-
+    });
 });
 
 // Matches /quote ($ simbolizes end of line)

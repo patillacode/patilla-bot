@@ -30,9 +30,9 @@ function getStartMessage(){
 exports.getStartMessage = getStartMessage;
 exports.getHelpMessage = getHelpMessage;
 
+// memes?
 // timezones
 // latest news (filtered?)
-// random quote
 // random gif -> giphy?
 // random pic
 // twitter - last 5 tweets of a user
