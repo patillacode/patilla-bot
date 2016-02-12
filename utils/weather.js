@@ -1,56 +1,63 @@
 var weather = require('weather-js');
+var emoji = require('node-emoji').emoji;
+
+var icons = {
+             "Clear": emoji.sunny,
+             "Sunny": emoji.sunny,
+             "Mostly Sunny": emoji.partly_sunny,
+             "Partly Sunny": emoji.partly_sunny,
+             "Partly Cloudy": emoji.partly_sunny,
+             "Mostly Cloudy": emoji.cloud,
+             "Cloudy": emoji.cloud,
+             "Light Rain": emoji.cloud_rain,
+             "Rain Showers": emoji.cloud_rain,
+             "Rain": emoji.cloud_rain,
+             "Storm": emoji.thunder_cloud_rain,
+             "Snow": emoji.snowflake
+            }
 
 function getWeatherData(location, callback) {
     weather.find({
         search: location,
         degreeType: 'C'
     }, function(err, result) {
+
+        var weatherData;
+
         if (err) {
-            console.log("Error finding the weather: ", err);
+            callback(err, false);
         }
         else {
             var current = result[0]['current'];
-            console.log("current: ", current);
-            var weatherData = {
+            weatherData = {
                 'temperature': current['temperature'],
                 'skytext': current['skytext'],
                 'feelslike': current['feelslike'],
                 'humidity': current['humidity']
             };
-            callback(weatherData);
-            // console.log("result", result);
-            // console.log("weatherData", weatherData);
-            // return {'status': true, 'data': weatherData};
-
-            // var weatherMessages = [];
-            // weatherMessages.push('It is fucking ' + weatherData['temperature'] + ' degrees, aight?');
-            // if (weatherData['temperature'] !== weatherData['feelslike']) {
-            //     weatherMessages.push('But it feels like ' + weatherData['feelslike'] + 'º god dammit!');
-            // }
-            // weatherMessages.push(weatherData['skytext'] + ' / ' + weatherData['humidity'] + '% humidity');
-            // printWeather(result, bot, message, weatherMessages);
+            console.log("Got weather data...");
+            callback(weatherData, true);
         }
-
-
     });
 }
 
 function getWeatherMessage(location, callback){
-    console.log("location", location);
-    getWeatherData(location, function(weatherData){
-        console.log("weatherData: ", weatherData);
+    getWeatherData(location, function(weatherData, status){
         var message = "";
 
-        if(weatherData['status']){
-            message = "Current weather in " + location + ":";
-            message += weatherData['temperature'] + "º C";
-            return message;
+        if(status == true){
+            message = "Current weather in " + location + ": " + icons[weatherData['skytext']]+ "\n\n";
+            message += "Temperature is * " + weatherData['temperature'] + "ºC *";
+            if (weatherData['temperature'] !== weatherData['feelslike']) {
+                message += ', but it feels like *' + weatherData['feelslike'] + 'ºC *';
+            }
+            message += "\n*" + weatherData['skytext'] + '* with *' + weatherData['humidity'] + '%* humidity.\n';
         }
         else{
-            console.log("Error:", weatherData['data']);
-            message = "There was a problem gathering weather data."
-            callback(message);
+            console.log("Error:", weatherData);
+            message = "There was a problem accessing weather data. Please try again later."
         }
+        callback(message);
     });
 }
 

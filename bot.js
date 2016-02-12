@@ -43,10 +43,9 @@ bot.onText(/\/kitten/, function (msg) {
     bot.sendPhoto(chatId, photo, {caption: 'A cute kitten.'});
 });
 
-// Matches /weather
-bot.onText(/\/weather/, function (msg, match) {
+// Matches /weather city
+bot.onText(/\/weather (.+)/, function (msg, match) {
     var fromId = msg.from.id; // get the id, of who is sending the message
-    console.log("match: ", match);
     weather.getWeatherMessage(match[1], function(message){
         bot.sendMessage(fromId,
                         message,
@@ -55,6 +54,19 @@ bot.onText(/\/weather/, function (msg, match) {
                             disable_web_page_preview: true
                         });
     });
+});
+
+// Matches /weather
+bot.onText(/\/weather/, function (msg, match) {
+    var fromId = msg.from.id; // get the id, of who is sending the message
+    var message = "Please write the city you want to get the weather info for:\n"
+    message += "Like this `/weather city`."
+    bot.sendMessage(fromId,
+                    message,
+                    {
+                        parse_mode: "Markdown",
+                        disable_web_page_preview: true
+                    });
 });
 
 // // Matches /echo [whatever]
