@@ -3,15 +3,16 @@ var emoji = require('node-emoji').emoji;
 
 var icons = {
              "Clear": emoji.sunny,
+             "Mostly Clear": emoji.sunny,
              "Sunny": emoji.sunny,
              "Mostly Sunny": emoji.partly_sunny,
              "Partly Sunny": emoji.partly_sunny,
              "Partly Cloudy": emoji.partly_sunny,
              "Mostly Cloudy": emoji.cloud,
              "Cloudy": emoji.cloud,
-             "Light Rain": emoji.cloud_rain,
-             "Rain Showers": emoji.cloud_rain,
-             "Rain": emoji.cloud_rain,
+             "Light Rain": emoji.umbrella,
+             "Rain Showers": emoji.umbrella,
+             "Rain": emoji.umbrella,
              "Storm": emoji.thunder_cloud_rain,
              "Snow": emoji.snowflake
             }
@@ -46,12 +47,12 @@ function getWeatherMessage(location, callback){
         var message = "";
 
         if(status == true){
-            message = "Current weather in " + location + ": " + icons[weatherData['skytext']]+ "\n\n";
+            message = "Current weather in " + location + ": \n\n";
             message += "Temperature is * " + weatherData['temperature'] + "ºC *";
             if (weatherData['temperature'] !== weatherData['feelslike']) {
                 message += ', but it feels like *' + weatherData['feelslike'] + 'ºC *';
             }
-            message += "\n*" + weatherData['skytext'] + '* with *' + weatherData['humidity'] + '%* humidity.\n';
+            message += "\n*" + weatherData['skytext'] + "* " + icons[weatherData['skytext']] + ' with *' + weatherData['humidity'] + '%* humidity.\n';
         }
         else{
             console.log("Error:", weatherData);
