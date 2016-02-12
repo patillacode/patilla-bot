@@ -11,6 +11,7 @@
     "url": "https://github.com/patillacode/patilla-bot.git"
   },
   "dependencies": {
+    "node-emoji": "^1.0.4",
     "node-telegram-bot-api": "^0.20.1",
     "weather-js": "^1.0.2"
   },
