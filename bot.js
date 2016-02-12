@@ -14,6 +14,7 @@ bot.getMe().then(function (me) {
 
 // Matches /help
 bot.onText(/\/help/, function (msg, match) {
+    console.log(new Date() + " - /help command executed");
     var fromId = msg.from.id; // get the id, of who is sending the message
     var message = commands.getHelpMessage();
     bot.sendMessage(fromId,
@@ -26,6 +27,7 @@ bot.onText(/\/help/, function (msg, match) {
 
 // Matches /start
 bot.onText(/\/start/, function (msg, match) {
+    console.log(new Date() + " - /start command executed");
     var fromId = msg.from.id; // get the id, of who is sending the message
     var message = commands.getStartMessage();
     bot.sendMessage(fromId,
@@ -38,6 +40,7 @@ bot.onText(/\/start/, function (msg, match) {
 
 // Matches /kitten
 bot.onText(/\/kitten/, function (msg) {
+    console.log(new Date() + " - /kitten command executed");
     var chatId = msg.chat.id;
     // photo can be: a file path, a stream or a Telegram file_id
     var photo = kittens.getKittenImagePath();
@@ -59,6 +62,7 @@ bot.onText(/\/weather (.+)/, function (msg, match) {
 
 // Matches /weather ($ simbolizes end of line)
 bot.onText(/\/weather$/, function (msg, match) {
+    console.log(new Date() + " - /weather command executed");
     var fromId = msg.from.id; // get the id, of who is sending the message
     var message = "Please write the city you want to get the weather info for:\n";
     message += "Like this `/weather city`";
@@ -72,6 +76,7 @@ bot.onText(/\/weather$/, function (msg, match) {
 
 // Matches /quote category
 bot.onText(/\/quote (.+)/, function (msg, match) {
+    console.log(new Date() + " - /quote command executed");
     var fromId = msg.from.id; // get the id, of who is sending the message
     var category = match[1];
     quotes.getRandomQuote(category, function(message){
@@ -86,6 +91,7 @@ bot.onText(/\/quote (.+)/, function (msg, match) {
 
 // Matches /quote ($ simbolizes end of line)
 bot.onText(/\/quote$/, function (msg, match) {
+    console.log(new Date() + " - /quote command executed");
     var fromId = msg.from.id; // get the id, of who is sending the message
     var message = "Please write the category, " + quotes.getQuotesErrorMessage();
     bot.sendMessage(fromId,
